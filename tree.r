@@ -26,7 +26,7 @@ t0 <- rpart(formula = diabetes ~ gender + age +
     cp = 0,
     minsplit = 300, 
     minbucket = 100, 
-    maxdepth = 7,
+    maxdepth = 8,
     
 ))
 #plot initial tree
@@ -54,11 +54,23 @@ p <- predict(t, newdata = df.test, type = "class")
 
 # confusion matrix
 pure_table <- table(p,df.test$diabetes)
-confusionMatrix(data = p, reference = df.test$diabetes, positive = "1")
+conf_mat <- confusionMatrix(data = p, reference = df.test$diabetes, positive = "1")
+conf_mat
 # percentage values of confusion matrix
 prop.table(pure_table)
-# error rate
+
+
+# error rate (= 1- accuracy)
 sum(p != df.test$diabetes) / nrow(df.test)
 
+sensitivity <- conf_matrix$byClass["Sensitivity"]
+sensitivity
 
+specificity <- conf_matrix$byClass["Specificity"]
+specificity
 
+precision <- conf_matrix$byClass["Pos Pred Value"]
+precision
+
+f1_score <- conf_matrix$byClass["F1"]
+f1_score
