@@ -1,5 +1,5 @@
 # Read the data
-diabetes_prediction_dataset <- read.csv("diabetes_prediction_dataset.csv", header=TRUE, sep=";")
+diabetes_prediction_dataset <- read.csv("Plots/diabetes_prediction_dataset.csv", header=TRUE, sep=";")
 
 head(diabetes_prediction_dataset)
 

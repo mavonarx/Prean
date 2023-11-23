@@ -2,7 +2,7 @@ install.packages("caret")
 library(caret)
 
 
-diabetes_prediction_dataset <- read.csv("diabetes_prediction_dataset.csv", header=TRUE, sep=";")
+diabetes_prediction_dataset <- read.csv("Plots/diabetes_prediction_dataset.csv", header=TRUE, sep=";")
 
 # One Hot Encode Gender Column
 one_hot_encoded_data <- dummyVars(" ~ gender", data = diabetes_prediction_dataset)
@@ -56,3 +56,4 @@ par(mar = c(5, 10, 4, 2))
 
 # 1. Plot: Barplot for Correlation between Variables 9-15 and Diabetes
 barplot(height = correlation[9:length(correlation)], names.arg = x[9:length(correlation)], las = 2, main= "Correlation with Diabetes", xlim = c(-0.5, 0.5), horiz = TRUE)
+

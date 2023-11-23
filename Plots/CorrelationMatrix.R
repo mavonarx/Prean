@@ -1,6 +1,6 @@
 library(corrplot)
 # Read the data
-diabetes_prediction_dataset <- read.csv("diabetes_prediction_dataset.csv", header=TRUE, sep=";")
+diabetes_prediction_dataset <- read.csv("Plots/diabetes_prediction_dataset.csv", header=TRUE, sep=";")
 
 # Set up a 1x2 grid layout for two plots side by side
 par(mfrow=c(1, 2))

@@ -1,4 +1,4 @@
-diabetes_prediction_dataset <- read.csv("diabetes_prediction_dataset.csv", header=TRUE, sep=";")
+diabetes_prediction_dataset <- read.csv("Plots/diabetes_prediction_dataset.csv", header=TRUE, sep=";")
 
 # Create a contingency table for gender
 table_data <- table(diabetes_prediction_dataset$gender, diabetes_prediction_dataset$diabetes)

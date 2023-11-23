@@ -1,5 +1,5 @@
 # Read the data
-diabetes_prediction_dataset <- read.csv("diabetes_prediction_dataset.csv", header=TRUE, sep=";")
+diabetes_prediction_dataset <- read.csv("Plots/diabetes_prediction_dataset.csv", header=TRUE, sep=";")
 
 # Set up a 1x2 grid layout for two plots side by side
 par(mfrow=c(1, 2))
@@ -12,3 +12,4 @@ hist(diabetes_prediction_dataset$bmi, main="BMI Distribution", xlab="BMI", ylab=
 
 # Reset the layout to the default (1x1) after creating the plots
 par(mfrow=c(1, 1))
+

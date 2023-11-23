@@ -1,5 +1,5 @@
 # Read the data
-diabetes_prediction_dataset <- read.csv("diabetes_prediction_dataset.csv", header=TRUE, sep=";")
+diabetes_prediction_dataset <- read.csv("Plots/diabetes_prediction_dataset.csv", header=TRUE, sep=";")
 
 head(diabetes_prediction_dataset)
 
@@ -23,3 +23,4 @@ boxplot(HbA1c_level ~ diabetes, data=diabetes_prediction_dataset, main="HbA1c Le
 
 # Reset the layout to the default (1x1) after creating the plots
 par(mfrow=c(1, 1))
+
