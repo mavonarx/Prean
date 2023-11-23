@@ -14,15 +14,19 @@ subs.train <- sample(1:nrow(data), 0.8 * nrow(data))
 data.train <- data[subs.train, ]
 data.test <- data[-subs.train, ]
 
-data.train_scaled = scale(data.train[-9])
-test_scaled_scaled = scale(data.test[-9])
+
+data.train <- subset(data.train, select=c('HbA1c_level', 'blood_glucose_level', 'diabetes'))
+data.test <- subset(data.test, select =c('HbA1c_level', 'blood_glucose_level', 'diabetes'))
+data.train_scaled = scale(data.train[-3])
+test_scaled_scaled = scale(data.test[-3])
+
 
 pred <- knn(
-    train <- data.train_scaled,
-    test <- test_scaled_scaled,
-    cl <- data.train$diabetes,
-    k <- 15,
-    prob <- FALSE
+  train <- data.train_scaled,
+  test <- test_scaled_scaled,
+  cl <- data.train$diabetes,
+  k <- 3,
+  prob <- FALSE
 )
 
 #attributes(.Last.value)
