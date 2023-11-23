@@ -2,7 +2,7 @@ install.packages("caret")  # Falls 'caret' noch nicht installiert ist
 library(caret)
 
 # Daten einlesen
-diabetes_prediction_dataset <- read.csv("C:/Studium/Semester5/Predictive Analytics/Semesterarbeit/diabetes_prediction_dataset.csv")
+diabetes_prediction_dataset <- read.csv("Prepped_diabetes_data_named.data")
 
 head(diabetes_prediction_dataset)
 
