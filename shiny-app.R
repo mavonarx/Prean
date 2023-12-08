@@ -70,14 +70,14 @@ ui <- fluidPage(
     mainPanel(
       # Output: Histogram ----
       textOutput(outputId = "logreg_diabetes_prediction"),
-      textOutput(outputId = "init_tree_diabetes_prediction")
+      textOutput(outputId = "init_tree_diabetes_prediction"),
+      
     )
   )
 )
 
 logreg = readRDS("logreg_model.rda")
-tree = readRDS("initial_tree.rda")
-pruned_tree = readRDS("pruned_tree.rda")
+tree = readRDS("pruned_tree.rda")
 
 
 
