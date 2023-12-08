@@ -70,7 +70,8 @@ ui <- fluidPage(
     mainPanel(
       # Output: Histogram ----
       textOutput(outputId = "logreg_diabetes_prediction"),
-      textOutput(outputId = "init_tree_diabetes_prediction"),
+      textOutput(outputId = "prune_tree_diabetes_prediction"),
+      textOutput(outputId = "KNN_diabetes_prediction")
       
     )
   )
@@ -104,18 +105,53 @@ server <- function(input, output) {
     if (prediction > 0.5) {
       return("Logistic regression Predicts:  Diabetes")
     } else {
-      return("Logistic regression Predicts:  No diabetes")
+      return("Logistic regression Predicts:  No Diabetes")
     }
   })
   
-  output$init_tree_diabetes_prediction <- renderText({
+  output$prune_tree_diabetes_prediction <- renderText({
     df <- Data_Frame()
     prediction = predict(tree, newdata = df)
     if (prediction[2] > 0.5) {
-      return("Initial Tree Predicts:  Diabetes")
+      return("Pruned Tree Predicts:  Diabetes")
     } else {
-      return("Initial Tree Predicts:  No diabetes")
+      return("Pruned Tree Predicts:  No Diabetes")
     }
+  })
+  
+  output$KNN_diabetes_prediction <- renderText({
+    df <- Data_Frame()
+    set.seed(42)
+    
+    data <- read.csv("Prepped_diabetes_data_named.data")
+    
+    data$diabetes <- as.factor(data$diabetes)
+    # Check the structure of your data
+    str(data)
+    
+    # Assuming "diabetes" is the response variable
+    subs.train <- sample(1:nrow(data), 0.8 * nrow(data))
+    data.train <- data[subs.train, ]
+    data.test <- data[-subs.train, ]
+    
+    data.train_scaled = scale(data.train[-9])
+    test_scaled_scaled = scale(data.test[-9])
+    
+    pred <- knn(
+      train <- data.train_scaled,
+      test <- df,
+      cl <- data.train$diabetes,
+      k <- 15,
+      prob <- FALSE
+    )
+    print(pred)
+    if(pred > 0.5){
+      return("KNN Predicts:  Diabetes")
+    }
+    else{
+      return("KNN Predicts:  No Diabetes")
+    }
+    
   })
   
 }
