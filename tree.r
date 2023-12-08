@@ -74,3 +74,7 @@ precision
 
 f1_score <- conf_matrix$byClass["F1"]
 f1_score
+
+
+saveRDS(t0, file = "initial_tree.rda")
+saveRDS(t, file = "pruned_tree.rda")

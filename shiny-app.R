@@ -78,6 +78,8 @@ ui <- fluidPage(
 )
 
 logreg = readRDS("logreg_model.rda")
+tree = readRDS("initial_tree.rda")
+pruned_tree = readRDS("pruned_tree.rda")
 
 
 
@@ -102,10 +104,14 @@ server <- function(input, output) {
     df <- Data_Frame()
     prediction <- predict.glm(logreg, newdata = df, type = "response")
     if (prediction > 0.5) {
-      return("Has diabetes")
+      return("Logistic regression Predicts:  Diabetes")
     } else {
-      return("Has not diabetes")
+      return("Logistic regression Predicts:  No diabetes")
     }
+  })
+  output$diabetes_prediction <- renderText({
+    df <- Data_Frame()
+    pred = predict(tree, df = df.test, type = "class")
   })
   
 }
