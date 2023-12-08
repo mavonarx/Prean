@@ -124,35 +124,33 @@ server <- function(input, output) {
     set.seed(42)
     
     data <- read.csv("Prepped_diabetes_data_named.data")
-    
     data$diabetes <- as.factor(data$diabetes)
-    # Check the structure of your data
-    str(data)
     
-    # Assuming "diabetes" is the response variable
+    # Splitting the data
     subs.train <- sample(1:nrow(data), 0.8 * nrow(data))
     data.train <- data[subs.train, ]
     data.test <- data[-subs.train, ]
     
-    data.train_scaled = scale(data.train[-9])
-    test_scaled_scaled = scale(data.test[-9])
+    # Scaling
+    scale_func <- preProcess(data.train[-9], method = c("center", "scale"))
+    data.train_scaled <- predict(scale_func, data.train[-9])
+    df_scaled <- predict(scale_func, df[-9])
     
+    # KNN prediction
     pred <- knn(
-      train <- data.train_scaled,
-      test <- df,
-      cl <- data.train$diabetes,
-      k <- 15,
-      prob <- FALSE
+      train = data.train_scaled,
+      test = df_scaled,
+      cl = data.train$diabetes,
+      k = 15
     )
     print(pred)
-    if(pred > 0.5){
+    if(pred != 0){ 
       return("KNN Predicts:  Diabetes")
-    }
-    else{
+    } else {
       return("KNN Predicts:  No Diabetes")
     }
-    
   })
+  
   
 }
 
