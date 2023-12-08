@@ -69,10 +69,8 @@ ui <- fluidPage(
     # Main panel for displaying outputs ----
     mainPanel(
       # Output: Histogram ----
-      textOutput(outputId = "diabetes_prediction"),
-      tableOutput(outputId = "cptable"),
-      plotOutput(outputId = "cp_plot"),
-      plotOutput(outputId = "tree_pruned"),
+      textOutput(outputId = "logreg_diabetes_prediction"),
+      textOutput(outputId = "init_tree_diabetes_prediction")
     )
   )
 )
@@ -100,7 +98,7 @@ server <- function(input, output) {
   })
   #predictions <- predict.glm(logreg, newdata = Data_Frame, type = "response")
   
-  output$diabetes_prediction <- renderText({
+  output$logreg_diabetes_prediction <- renderText({
     df <- Data_Frame()
     prediction <- predict.glm(logreg, newdata = df, type = "response")
     if (prediction > 0.5) {
@@ -109,9 +107,16 @@ server <- function(input, output) {
       return("Logistic regression Predicts:  No diabetes")
     }
   })
-  output$diabetes_prediction <- renderText({
+  
+  output$init_tree_diabetes_prediction <- renderText({
     df <- Data_Frame()
-    pred = predict(tree, df = df.test, type = "class")
+    prediction = predict(tree, newdata = df)
+    print(prediction)
+    if (prediction[0][1] > 0.5) {
+      return("Initial Tree Predicts:  Diabetes")
+    } else {
+      return("Initial Tree Predicts:  No diabetes")
+    }
   })
   
 }
