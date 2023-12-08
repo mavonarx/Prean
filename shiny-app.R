@@ -34,8 +34,8 @@ ui <- fluidPage(
                   max = 1,
                   value = 1
       ),
-      sliderInput(inputId = "heart_diseas",
-                  label = "heart_diseas:",
+      sliderInput(inputId = "heart_disease",
+                  label = "heart_disease:",
                   min = 0,
                   max = 1,
                   value = 1
@@ -64,12 +64,10 @@ ui <- fluidPage(
                   max = 300,
                   value = 130,
       ),
-      
     ),
     
     # Main panel for displaying outputs ----
     mainPanel(
-      
       # Output: Histogram ----
       plotOutput(outputId = "logreg"),
       tableOutput(outputId = "cptable"),
@@ -85,29 +83,28 @@ logreg = readRDS("logreg_model.rda")
 
 server <- function(input, output) {
   
-  Data_Frame <- data.frame (
-  gender = input$gender ,
-  age = input$age,
-  hypertension = input$hypertension,
-  heart_diseas = input$heart_diseas,
-  smoking_history = input$smoking_history,
-  bmi = input$bmi,
-  HbA1c_level = input$HbA1c_level,
-  blood_glucose_level = input$blood_glucose_level
-  )
-  predictions <- predict.glm(logreg, newdata = Data_Frame, type = "response")
+  Data_Frame <- reactive({
+    # Debugging: print the inputs
+    data.frame(
+      gender = input$gender,
+      age = input$age,
+      hypertension = input$hypertension,
+      heart_disease = input$heart_disease,  
+      smoking_history = input$smoking_history,
+      bmi = input$bmi,
+      HbA1c_level = input$HbA1c_level,
+      blood_glucose_level = input$blood_glucose_level
+    )
+  })
+  #predictions <- predict.glm(logreg, newdata = Data_Frame, type = "response")
   
-  output$tree <- renderPlot({
-    rpart.plot(predictions, main = "prediction from sliders")
+  output$logreg <- renderPlot({
+    # Ensure that the reactive data frame is only calculated when needed
+    df <- Data_Frame()
+    
+    predictions <- predict.glm(logreg, newdata = df, type = "response")
+    plot(predictions, main = "Prediction Log Reg")
   })
 }
 
 shinyApp(ui = ui, server = server)
-
-
-
-
-
-
-
-
