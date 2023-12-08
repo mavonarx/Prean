@@ -25,7 +25,7 @@ ui <- fluidPage(
       sliderInput(inputId = "age",
                   label = "age:",
                   min = 0,
-                  max = 10,
+                  max = 100,
                   value = 50
       ), 
       sliderInput(inputId = "hypertension",
@@ -71,10 +71,43 @@ ui <- fluidPage(
     mainPanel(
       
       # Output: Histogram ----
-      plotOutput(outputId = "tree"),
+      plotOutput(outputId = "logreg"),
       tableOutput(outputId = "cptable"),
       plotOutput(outputId = "cp_plot"),
       plotOutput(outputId = "tree_pruned"),
     )
   )
 )
+
+logreg = readRDS("logreg_model.rda")
+
+
+
+server <- function(input, output) {
+  
+  Data_Frame <- data.frame (
+  gender = input$gender ,
+  age = input$age,
+  hypertension = input$hypertension,
+  heart_diseas = input$heart_diseas,
+  smoking_history = input$smoking_history,
+  bmi = input$bmi,
+  HbA1c_level = input$HbA1c_level,
+  blood_glucose_level = input$blood_glucose_level
+  )
+  predictions <- predict.glm(logreg, newdata = Data_Frame, type = "response")
+  
+  output$tree <- renderPlot({
+    rpart.plot(predictions, main = "prediction from sliders")
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+
+
+
+
+
+
+
