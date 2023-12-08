@@ -69,7 +69,7 @@ ui <- fluidPage(
     # Main panel for displaying outputs ----
     mainPanel(
       # Output: Histogram ----
-      plotOutput(outputId = "logreg"),
+      textOutput(outputId = "diabetes_prediction"),
       tableOutput(outputId = "cptable"),
       plotOutput(outputId = "cp_plot"),
       plotOutput(outputId = "tree_pruned"),
@@ -98,13 +98,16 @@ server <- function(input, output) {
   })
   #predictions <- predict.glm(logreg, newdata = Data_Frame, type = "response")
   
-  output$logreg <- renderPlot({
-    # Ensure that the reactive data frame is only calculated when needed
+  output$diabetes_prediction <- renderText({
     df <- Data_Frame()
-    
-    predictions <- predict.glm(logreg, newdata = df, type = "response")
-    plot(predictions, main = "Prediction Log Reg")
+    prediction <- predict.glm(logreg, newdata = df, type = "response")
+    if (prediction > 0.5) {
+      return("Has diabetes")
+    } else {
+      return("Has not diabetes")
+    }
   })
+  
 }
 
 shinyApp(ui = ui, server = server)
