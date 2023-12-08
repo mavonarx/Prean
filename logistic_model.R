@@ -78,3 +78,6 @@ summary(model.one)
 model_evaluation(model.one, diabetes_prediction_dataset.test)
 summary(model.two)
 model_evaluation(model.two, diabetes_prediction_dataset.test)
+
+
+saveRDS(model, file = "logreg_model.rda")
