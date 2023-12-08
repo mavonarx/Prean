@@ -111,8 +111,7 @@ server <- function(input, output) {
   output$init_tree_diabetes_prediction <- renderText({
     df <- Data_Frame()
     prediction = predict(tree, newdata = df)
-    print(prediction)
-    if (prediction[0][1] > 0.5) {
+    if (prediction[2] > 0.5) {
       return("Initial Tree Predicts:  Diabetes")
     } else {
       return("Initial Tree Predicts:  No diabetes")
