@@ -2,12 +2,13 @@ library(shiny)
 library(rpart)
 library(rpart.plot)
 library(caret)
+library(class)
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("Tree"),
+  titlePanel("Prediction"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
