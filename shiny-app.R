@@ -2,12 +2,13 @@ library(shiny)
 library(rpart)
 library(rpart.plot)
 library(caret)
+library(class)
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("Tree"),
+  titlePanel("Prediction"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
@@ -103,9 +104,9 @@ server <- function(input, output) {
     df <- Data_Frame()
     prediction <- predict.glm(logreg, newdata = df, type = "response")
     if (prediction > 0.5) {
-      return("Logistic regression Predicts:  Diabetes")
+      return(paste("Logistic regression Predicts:  Diabetes with:", round(prediction*100, 3), "%"))
     } else {
-      return("Logistic regression Predicts:  No Diabetes")
+      return(paste("Logistic regression Predicts:  No Diabetes with:", 100-round(prediction*100, 3), "%"))
     }
   })
   
@@ -113,9 +114,9 @@ server <- function(input, output) {
     df <- Data_Frame()
     prediction = predict(tree, newdata = df)
     if (prediction[2] > 0.5) {
-      return("Pruned Tree Predicts:  Diabetes")
+      return(paste("Pruned Tree Predicts:  Diabetes with:", round(prediction[2]*100, 3), "%"))
     } else {
-      return("Pruned Tree Predicts:  No Diabetes")
+      return(paste("Pruned Tree Predicts:  No Diabetes with:", 100-round(prediction[2]*100, 3), "%"))
     }
   })
   
